@@ -600,7 +600,7 @@
     <div class="hero-label">&gt; inicializando_portafolio.exe</div>
     <h1 class="hero-name glitch" data-text="JUAN DAVID">
       <span class="line1">JUAN DAVID</span>
-      <span class="line2">RENGIFO</span>
+      <span class="line2">RENGIFO.U</span>
     </h1>
     <div class="hero-title">
       <span class="bracket">[</span> Analista &amp; Desarrollador de Software <span class="bracket">]</span>
@@ -912,4 +912,45 @@
       setTimeout(type, 40);
     } else {
       label.textContent += '█';
-      setInterval(
+      setInterval(() => {
+        if (label.textContent.endsWith('█')) {
+          label.textContent = label.textContent.slice(0, -1);
+        } else {
+          label.textContent += '█';
+        }
+      }, 500);
+    }
+  };
+  type();
+
+  // SECTION REVEAL ANIMATION
+  const revealElements = document.querySelectorAll('.reveal');
+  revealElements.forEach((el, index) => {
+    el.style.animationDelay = (index * 0.1) + 's';
+  });
+
+  // FOOTER
+  document.addEventListener('scroll', () => {
+    const footer = document.querySelector('footer');
+    if (footer) {
+      const footerPosition = footer.getBoundingClientRect().top;
+      if (footerPosition < window.innerHeight) {
+        footer.style.opacity = '1';
+      }
+    }
+  });
+
+  // ANIMATIONS
+  const style = document.createElement('style');
+  style.textContent = `
+    @keyframes fadeSlideUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .reveal { opacity: 0; animation: fadeSlideUp 0.8s ease forwards; }
+    .reveal.visible { opacity: 1; }
+  `;
+  document.head.appendChild(style);
+</script>
+</body>
+</html>

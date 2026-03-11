@@ -18,3 +18,13 @@ portfolio/
 │       └── fonts/          ← Fuentes locales
 └── public/                 ← CV en PDF, archivos descargables
 ```
+
+## Cómo ejecutar en VSCode
+1. Abre esta carpeta en VSCode
+2. Instala la extensión "Live Server"
+3. Click derecho en `index.html` → "Open with Live Server"
+4. Se abre en http://127.0.0.1:5500 🚀
+
+## Cómo publicar gratis
+- **GitHub Pages**: Sube a GitHub, activa Pages en Settings
+- **Netlify Drop**: Arrastra la carpeta a https://app.netlify.com/drop
