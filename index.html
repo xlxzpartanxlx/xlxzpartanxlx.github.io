@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -217,23 +218,49 @@
     width: 380px; height: 380px;
     animation: fadeSlideUp 1s 0.4s ease both;
   }
+  
+  /* Video frame with glow effect */
+  .hero-visual::before {
+    content: '';
+    position: absolute; inset: -8px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(0,245,255,0.4) 0%, transparent 70%);
+    z-index: 0;
+    animation: pulse-glow 3s ease-in-out infinite;
+  }
+  
   .hex-ring {
     position: absolute; inset: 0;
     border: 1px solid rgba(0,245,255,0.2);
     border-radius: 50%;
     animation: spin-slow 20s linear infinite;
+    z-index: 2;
   }
-  .hex-ring:nth-child(2) {
+  .hex-ring:nth-child(3) {
     inset: 20px;
     border-color: rgba(57,255,20,0.15);
     animation: spin-slow 15s linear infinite reverse;
   }
-  .hex-ring:nth-child(3) {
+  .hex-ring:nth-child(4) {
     inset: 40px;
     border-color: rgba(191,0,255,0.15);
     animation: spin-slow 10s linear infinite;
   }
-  .hex-core {
+  
+  /* Video frame border */
+  .hero-video-frame {
+    position: absolute; inset: 60px;
+    border: 2px solid rgba(0,245,255,0.6);
+    border-radius: 50%;
+    box-shadow: 
+      inset 0 0 20px rgba(0,245,255,0.2),
+      0 0 30px rgba(0,245,255,0.4),
+      0 0 60px rgba(0,245,255,0.2);
+    z-index: 3;
+    overflow: hidden;
+  }
+  
+  .hero-core {
     position: absolute; inset: 60px;
     background: radial-gradient(circle, rgba(0,245,255,0.08) 0%, transparent 70%);
     border-radius: 50%;
@@ -242,7 +269,68 @@
     font-size: 0.6rem; color: rgba(0,245,255,0.4);
     letter-spacing: 0.15em;
     text-align: center; line-height: 2;
+    z-index: 5;
   }
+  
+  .hero-video {
+    position: absolute; inset: 0;
+    width: 100%; height: 100%;
+    border-radius: 50%;
+    object-fit: cover;
+    z-index: 1;
+  }
+  
+  /* Decorative corner elements */
+  .video-corner {
+    position: absolute; width: 20px; height: 20px;
+    border: 2px solid rgba(0,245,255,0.6);
+    z-index: 4;
+  }
+  
+  .video-corner.top-left {
+    top: 50px; left: 50px;
+    border-right: none; border-bottom: none;
+    transform: rotate(0deg);
+  }
+  
+  .video-corner.top-right {
+    top: 50px; right: 50px;
+    border-left: none; border-bottom: none;
+    transform: rotate(90deg);
+  }
+  
+  .video-corner.bottom-left {
+    bottom: 50px; left: 50px;
+    border-right: none; border-top: none;
+    transform: rotate(270deg);
+  }
+  
+  .video-corner.bottom-right {
+    bottom: 50px; right: 50px;
+    border-left: none; border-top: none;
+    transform: rotate(180deg);
+  }
+  
+  /* Scan line effect */
+  .hero-video::after {
+    content: '';
+    position: absolute; inset: 0;
+    background: repeating-linear-gradient(
+      0deg, transparent, transparent 2px,
+      rgba(0,245,255,0.05) 2px, rgba(0,245,255,0.05) 4px
+    );
+    border-radius: 50%;
+    z-index: 4;
+    pointer-events: none;
+  }
+  
+  @keyframes pulse-glow {
+    0%, 100% { box-shadow: 0 0 30px rgba(0,245,255,0.3), 0 0 60px rgba(0,245,255,0.15); }
+    50% { box-shadow: 0 0 50px rgba(0,245,255,0.5), 0 0 100px rgba(0,245,255,0.25); }
+  }
+  
+  @keyframes spin-slow { to { transform: rotate(360deg); } }
+  
   @keyframes spin-slow { to { transform: rotate(360deg); } }
 
   /* SECTION COMMON */
@@ -450,13 +538,20 @@
   /* CONTACTO */
   #contacto { background: transparent; }
   .contact-grid {
-    display: grid; grid-template-columns: 1fr 1fr;
-    gap: 5rem; align-items: start;
+    display: grid; grid-template-columns: 1fr;
+    gap: 3rem; align-items: center; justify-items: center;
+  }
+  .contact-info {
+    max-width: 600px;
   }
   .contact-info p {
     font-size: 1.1rem; line-height: 1.9; color: #5a8090; margin-bottom: 2.5rem;
+    text-align: center;
   }
-  .contact-links { display: flex; flex-direction: column; gap: 1rem; }
+  .contact-links { 
+    display: flex; flex-direction: column; gap: 1rem;
+    justify-content: center;
+  }
   .contact-link {
     display: flex; align-items: center; gap: 1rem;
     font-family: 'Share Tech Mono', monospace;
@@ -469,39 +564,54 @@
   }
   .contact-link:hover { color: var(--neon-cyan); border-color: rgba(0,245,255,0.3); }
   .contact-link-icon { color: var(--neon-cyan); font-size: 1rem; }
-  .contact-form { display: flex; flex-direction: column; gap: 1.2rem; }
-  .form-group { display: flex; flex-direction: column; gap: 0.5rem; }
-  .form-label {
+  
+  /* WhatsApp Button Styles */
+  .whatsapp-button-container {
+    display: flex; justify-content: center; align-items: center;
+    margin-top: 2rem;
+  }
+  
+  .btn-whatsapp {
+    display: flex; align-items: center; gap: 1rem;
     font-family: 'Share Tech Mono', monospace;
-    font-size: 0.7rem; color: var(--text-muted);
-    letter-spacing: 0.2em; text-transform: uppercase;
+    font-size: 1rem; letter-spacing: 0.1em;
+    padding: 1.2rem 2.5rem; text-transform: uppercase;
+    background: #25D366; 
+    border: 2px solid #25D366;
+    color: white; 
+    cursor: pointer;
+    position: relative; overflow: hidden; 
+    transition: all 0.3s;
+    border-radius: 50px;
+    text-decoration: none;
+    box-shadow: 0 0 20px rgba(37, 211, 102, 0.3);
   }
-  .form-input, .form-textarea {
-    background: var(--dark-card);
-    border: 1px solid var(--dark-border);
-    color: var(--text-primary);
-    font-family: 'Rajdhani', sans-serif;
-    font-size: 1rem; padding: 0.9rem 1.2rem;
-    outline: none; transition: border-color 0.3s;
-  }
-  .form-input:focus, .form-textarea:focus { border-color: rgba(0,245,255,0.4); }
-  .form-textarea { resize: vertical; min-height: 120px; }
-  .btn-submit {
-    font-family: 'Share Tech Mono', monospace;
-    font-size: 0.82rem; letter-spacing: 0.2em;
-    padding: 1rem 2rem; text-transform: uppercase;
-    background: transparent; border: 1px solid var(--neon-cyan);
-    color: var(--neon-cyan); cursor: pointer;
-    position: relative; overflow: hidden; transition: color 0.3s;
-    clip-path: polygon(8px 0%, 100% 0%, calc(100% - 8px) 100%, 0% 100%);
-  }
-  .btn-submit::before {
+  
+  .btn-whatsapp::before {
     content: ''; position: absolute; inset: 0;
-    background: var(--neon-cyan); transform: translateX(-101%);
-    transition: transform 0.3s; z-index: -1;
+    background: rgba(255,255,255,0.2); transform: translateX(-101%);
+    transition: transform 0.3s; z-index: 0;
   }
-  .btn-submit:hover { color: var(--dark-bg); }
-  .btn-submit:hover::before { transform: translateX(0); }
+  
+  .btn-whatsapp:hover { 
+    box-shadow: 0 0 40px rgba(37, 211, 102, 0.6);
+    transform: scale(1.05);
+  }
+  
+  .btn-whatsapp:hover::before { transform: translateX(0); }
+  
+  .whatsapp-icon {
+    width: 28px; height: 28px;
+    display: flex; align-items: center; justify-content: center;
+    z-index: 1;
+    color: white;
+    flex-shrink: 0;
+  }
+  
+  .btn-whatsapp span {
+    z-index: 1;
+    position: relative;
+  }
 
   /* FOOTER */
   footer {
@@ -614,10 +724,18 @@
     </div>
   </div>
   <div class="hero-visual">
+    <video class="hero-video" autoplay loop muted playsinline>
+      <source src="src/assets/videos/background.mp4" type="video/mp4">
+    </video>
     <div class="hex-ring"></div>
     <div class="hex-ring"></div>
     <div class="hex-ring"></div>
-    <div class="hex-core">
+    <div class="hero-video-frame"></div>
+    <div class="video-corner top-left"></div>
+    <div class="video-corner top-right"></div>
+    <div class="video-corner bottom-left"></div>
+    <div class="video-corner bottom-right"></div>
+    <div class="hero-core">
       FULL<br>STACK<br>DEV<br>&amp; IA
     </div>
   </div>
@@ -803,7 +921,7 @@
         <div class="contact-links">
           <a href="/cdn-cgi/l/email-protection#d2a6a792b7bfb3bbbefcb1bdbf" class="contact-link">
             <span class="contact-link-icon">✉</span>
-            <span><span class="__cf_email__" data-cfemail="4e3a3b0e2b232f2722602d2123">[email&#160;protected]</span></span>
+            <span><span class="__cf_email__" data-cfemail="4e3a3b0e2b232f2722602d2123">juandavidrengifourreo@gmail.com</span></span>
           </a>
           <a href="#" class="contact-link">
             <span class="contact-link-icon">in</span>
@@ -819,20 +937,14 @@
           </a>
         </div>
       </div>
-      <div class="contact-form reveal">
-        <div class="form-group">
-          <label class="form-label">// nombre</label>
-          <input type="text" class="form-input" placeholder="Tu nombre">
-        </div>
-        <div class="form-group">
-          <label class="form-label">// email</label>
-          <input type="email" class="form-input" placeholder="tu@email.com">
-        </div>
-        <div class="form-group">
-          <label class="form-label">// mensaje</label>
-          <textarea class="form-textarea" placeholder="Cuéntame sobre tu proyecto..."></textarea>
-        </div>
-        <button class="btn-submit">Enviar Mensaje →</button>
+      <div class="whatsapp-button-container reveal">
+        <a href="https://wa.me/57305353440?text=Hola%20Juan%20David%2C%20me%20gustar%C3%ADa%20conectar%20contigo" class="btn-whatsapp" target="_blank" rel="noopener noreferrer">
+          <svg class="whatsapp-icon" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+            <path d="M17.672 13.105c-.288-.15-1.704-.841-1.968-.936-.264-.096-.456-.15-.648.15-.192.288-.744.936-.912 1.128-.168.192-.336.216-.624.072-.288-.144-1.212-.447-2.31-1.428-.855-.756-1.428-1.692-1.596-1.98-.168-.288-.012-.456.132-.6.132-.132.288-.336.432-.504.144-.168.192-.288.288-.48.096-.192.048-.36-.024-.504-.072-.144-.648-1.56-.888-2.136-.24-.552-.48-.48-.648-.48-.168 0-.36-.012-.552-.012-.192 0-.504.072-.768.36-.264.288-1.008.984-1.008 2.4 0 1.416 1.032 2.784 1.176 2.976.144.192 2.04 3.12 4.944 4.368 2.904 1.248 2.904.84 3.432.792.528-.048 1.704-.696 1.944-1.368.24-.672.24-1.248.168-1.368-.072-.12-.264-.192-.552-.336z"/>
+            <path d="M20.52 3.48C18.24 1.2 15.12 0 11.88 0 5.4 0 0 5.4 0 11.88c0 2.088.552 4.128 1.608 5.928L0 24l6.36-1.608c1.728.936 3.672 1.44 5.52 1.44 6.48 0 11.88-5.4 11.88-11.88 0-3.24-1.2-6.36-3.48-8.64zM11.88 21.6c-1.728 0-3.408-.432-4.92-1.248l-.36-.216-3.72.936.936-3.6-.24-.384C2.04 15.696 1.44 13.848 1.44 11.88 1.44 6.36 5.688 2.16 11.28 2.16c2.64 0 5.16 1.032 7.032 2.88 1.872 1.872 2.88 4.368 2.88 7.008 0 5.52-4.248 9.768-9.312 9.768z"/>
+          </svg>
+          <span>Enviar Mensaje</span>
+        </a>
       </div>
     </div>
   </div>
